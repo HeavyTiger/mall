@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.mapper.TagMapper">
+
+    <insert id="addTag" useGeneratedKeys="true" keyProperty="tid" keyColumn="tag_id"
+            parameterType="Tag">
+        INSERT INTO mall.tags(tag_id, tag_name)
+        VALUES (#{tid}, #{tName})
+    </insert>
+
+    <delete id="deleteTag" parameterType="int">
+        DELETE
+        FROM mall.tags
+        WHERE tag_id = #{tid}
+    </delete>
+
+    <update id="updateTag" parameterType="Tag">
+        UPDATE mall.tags
+        <set>
+            <if test="tName != null">tag_name=#{tName},</if>
+        </set>
+        WHERE tag_id = #{tid}
+    </update>
+
+    <resultMap id="TagMap" type="Tag">
+        <result column="tag_name" property="tName"/>
+    </resultMap>
+
+    <select id="queryTags" resultMap="TagMap">
+        SELECT *
+        FROM mall.tags
+    </select>
+
+    <select id="queryTagById" parameterType="int" resultMap="TagMap">
+        SELECT *
+        FROM mall.tags
+        WHERE tag_id = #{tid}
+    </select>
+
+    <select id="queryTagByName" parameterType="string" resultMap="TagMap">
+        SELECT *
+        FROM mall.tags
+        WHERE tag_name = ${tName}
+    </select>
+
+</mapper>
