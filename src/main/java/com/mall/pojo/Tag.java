@@ -9,12 +9,12 @@ package com.mall.pojo;
 public class Tag {
     private Integer tid;
 
-    private Integer tName;
+    private String tName;
 
     public Tag() {
     }
 
-    public Tag(Integer tid, Integer tName) {
+    public Tag(Integer tid, String tName) {
         this.tid = tid;
         this.tName = tName;
     }
@@ -35,11 +35,11 @@ public class Tag {
         this.tid = tid;
     }
 
-    public Integer gettName() {
+    public String gettName() {
         return tName;
     }
 
-    public void settName(Integer tName) {
+    public void settName(String tName) {
         this.tName = tName;
     }
 }

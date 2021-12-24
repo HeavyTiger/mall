@@ -1,17 +1,16 @@
-package com.mall.mapper;
+package com.mall.service;
 
-import com.mall.pojo.ProductDetail;
 import com.mall.pojo.Tag;
 
 import java.util.List;
 
 /**
- * @author heavytiger
+ * @author AnthonyCJ
  * @version 1.0
- * @description Tag标签类的相关接口
- * @date 2021/12/24 21:43
+ * @description 封装与Tag相关的service类接口
+ * @date 2021/12/24 23:52
  */
-public interface TagMapper {
+public interface TagService {
     /**
      * 增加tag表中的标签
      * @param tag 需要插入的标签
@@ -48,10 +47,8 @@ public interface TagMapper {
 
     /**
      * 通过tName获取产品的所有详情信息
-     * @param tName 需要查询的标签的id
+     * @param name 需要查询的标签的id
      * @return 返回查询到的产品信息
      */
-    public Tag queryTagByName(String tName);
-
-
+    public Tag queryTagByName(String name);
 }

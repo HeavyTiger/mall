@@ -21,7 +21,7 @@ public interface SupplierService {
     /**
      * 根据供应商的id删除供应商
      * @param supplierId 需要删除的供应商编号
-     * @return
+     * @return 返回影响的行数 这是AntonyCJ修改的
      */
     public Integer deleteSupplier(Integer supplierId);
 

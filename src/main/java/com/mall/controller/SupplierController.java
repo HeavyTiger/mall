@@ -8,5 +8,4 @@ package com.mall.controller;
  */
 public class SupplierController {
 
-
 }

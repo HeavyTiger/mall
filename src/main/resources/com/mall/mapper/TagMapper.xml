@@ -23,6 +23,7 @@
     </update>
 
     <resultMap id="TagMap" type="Tag">
+        <result column="tag_id" property="tid"/>
         <result column="tag_name" property="tName"/>
     </resultMap>
 
@@ -40,7 +41,7 @@
     <select id="queryTagByName" parameterType="string" resultMap="TagMap">
         SELECT *
         FROM mall.tags
-        WHERE tag_name = ${tName}
+        WHERE tag_name = #{tName}
     </select>
 
 </mapper>
