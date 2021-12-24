@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.mapper.SupplierMapper">
+
+    <resultMap id="SupplierMap" type="Supplier">
+        <result column="supplier_id" property="supplierId"/>
+        <result column="supplier_username" property="username"/>
+        <result column="supplier_password" property="password"/>
+        <result column="supplier_phone" property="phone"/>
+        <result column="supplier_email" property="email"/>
+        <result column="supplier_description" property="description"/>
+    </resultMap>
+
+    <insert id="addSupplier" useGeneratedKeys="true" keyProperty="supplierId" keyColumn="supplier_id"
+            parameterType="Supplier">
+        INSERT INTO mall.suppliers (supplier_id, supplier_username, supplier_password, supplier_phone,
+                                    supplier_email, supplier_description)
+        VALUES (#{supplierId}, #{username}, #{password}, #{phone}, #{email}, #{description})
+    </insert>
+
+    <delete id="deleteSupplier" parameterType="int">
+        DELETE
+        FROM mall.suppliers
+        WHERE supplier_id = #{supplierId}
+    </delete>
+
+    <update id="updateSupplier" parameterType="Supplier">
+        UPDATE mall.suppliers
+        <set>
+            <if test="username != null">supplier_username=#{username},</if>
+            <if test="password != null">supplier_password=#{password},</if>
+            <if test="phone != null">supplier_phone=#{phone},</if>
+            <if test="email != null">supplier_email=#{email},</if>
+            <if test="description != null">supplier_description=#{description}</if>
+        </set>
+        WHERE supplier_id = #{supplierId}
+    </update>
+
+    <select id="querySuppliers" resultMap="SupplierMap">
+        SELECT *
+        FROM mall.suppliers
+    </select>
+
+    <select id="querySupplierById" parameterType="int" resultMap="SupplierMap">
+        SELECT *
+        FROM mall.suppliers
+        WHERE supplier_id = #{supplierId}
+    </select>
+
+    <select id="querySupplierByName" parameterType="string" resultMap="SupplierMap">
+        SELECT *
+        FROM mall.suppliers
+        WHERE supplier_username = #{username}
+    </select>
+</mapper>
