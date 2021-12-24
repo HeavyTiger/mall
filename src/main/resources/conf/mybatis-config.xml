@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <!--配置数据源，交给Spring做-->
+    <!--取别名-->
+    <typeAliases>
+        <package name="com.mall.pojo"/>
+    </typeAliases>
+    <!--配置分页助手插件-->
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageHelper">
+            <!--指定使用的数据库-->
+            <property name="dialect" value="mysql"/>
+        </plugin>
+    </plugins>
+    <!--绑定mapper-->
+    <mappers>
+        <package name="com.mall.mapper"/>
+    </mappers>
+
+</configuration>

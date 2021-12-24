@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.mapper.CustomerMapper">
+
+    <insert id="addCustomer" useGeneratedKeys="true" keyProperty="userId" keyColumn="customer_id"
+            parameterType="Customer">
+        INSERT INTO mall.customers (customer_id, customer_username, customer_password, customer_gender, customer_phone,
+                                    customer_email, customer_description)
+        VALUES (#{userId}, #{username}, #{password}, #{gender}, #{phone}, #{email}, #{description})
+    </insert>
+
+    <delete id="deleteCustomer" parameterType="int">
+        DELETE
+        FROM mall.customers
+        WHERE customer_id = #{userId}
+    </delete>
+
+    <update id="updateCustomer" parameterType="Customer">
+        UPDATE mall.customers
+        <set>
+            <if test="username != null">customer_username=#{username},</if>
+            <if test="password != null">customer_password=#{password},</if>
+            <if test="gender != null">customer_gender=#{gender},</if>
+            <if test="phone != null">customer_phone=#{phone},</if>
+            <if test="email != null">customer_email=#{email},</if>
+            <if test="description != null">customer_description=#{description}</if>
+        </set>
+        WHERE customer_id = #{userId}
+    </update>
+
+    <resultMap id="CustomerMap" type="Customer">
+        <result column="customer_id" property="userId"/>
+        <result column="customer_username" property="username"/>
+        <result column="customer_password" property="password"/>
+        <result column="customer_gender" property="gender"/>
+        <result column="customer_phone" property="phone"/>
+        <result column="customer_email" property="email"/>
+        <result column="customer_description" property="description"/>
+    </resultMap>
+
+    <select id="queryCustomerById" parameterType="int" resultMap="CustomerMap">
+        SELECT *
+        FROM mall.customers
+        WHERE customer_id = #{userId}
+    </select>
+
+    <select id="queryCustomers" resultMap="CustomerMap">
+        SELECT *
+        FROM mall.customers
+    </select>
+
+    <select id="queryCustomerByName" parameterType="string" resultMap="CustomerMap">
+        SELECT *
+        FROM mall.customers
+        WHERE customer_username = #{username}
+    </select>
+</mapper>
