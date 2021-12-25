@@ -1,6 +1,7 @@
 package com.mall.mapper;
 
 import com.mall.pojo.ProductDetail;
+import com.mall.pojo.ProductSearch;
 
 import java.util.List;
 
@@ -44,4 +45,11 @@ public interface ProductMapper {
      * @return 返回查询到的产品信息
      */
     public ProductDetail queryProductDetailById(Integer pid);
+
+    /**
+     * 通过模糊搜索，获得需要的产品信息列表
+     * @param productSearch 搜索类，使用其中的字段进行搜索
+     * @return 返回获得的产品信息列表
+     */
+    public List<ProductDetail> queryProductDetailBySearch(ProductSearch productSearch);
 }

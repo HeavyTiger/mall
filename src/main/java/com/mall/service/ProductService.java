@@ -2,6 +2,7 @@ package com.mall.service;
 
 import com.github.pagehelper.PageInfo;
 import com.mall.pojo.ProductDetail;
+import com.mall.pojo.ProductSearch;
 
 import java.util.List;
 
@@ -53,4 +54,11 @@ public interface ProductService {
      * @return 返回通过分页查询到的产品详情
      */
     public PageInfo<ProductDetail> queryProductDetailsByPage(Integer pageNum, Integer pageSize);
+
+    /**
+     * 返回通过搜索对象查询到的产品详情信息
+     * @param productSearch 搜索对象，用于进行模糊查询
+     * @return 返回查询到的所有模糊匹配的信息
+     */
+    public PageInfo<ProductDetail> queryProductDetailsBySearch(ProductSearch productSearch, Integer pageNum, Integer pageSize);
 }

@@ -3,7 +3,10 @@ package com.mall.service.impl;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.mall.mapper.ProductMapper;
+import com.mall.mapper.SupplierMapper;
+import com.mall.mapper.TagMapper;
 import com.mall.pojo.ProductDetail;
+import com.mall.pojo.ProductSearch;
 import com.mall.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,22 +22,32 @@ import java.util.List;
 @Service("productService")
 public class ProductServiceImpl implements ProductService {
 
-    private ProductMapper productMapper;
+    private final ProductMapper productMapper;
+
+    private final TagMapper tagMapper;
+
+    private final SupplierMapper supplierMapper;
 
     @Autowired
-    public void setProductMapper(ProductMapper productMapper) {
+    public ProductServiceImpl(ProductMapper productMapper, TagMapper tagMapper, SupplierMapper supplierMapper) {
         this.productMapper = productMapper;
+        this.tagMapper = tagMapper;
+        this.supplierMapper = supplierMapper;
     }
 
     /**
      * 增加products表中的产品，将不使用product_detail视图，不做接口，仅在Junit中测试插入功能
      *
      * @param productDetail 需要插入的产品，请注意，此处只能使用products表中的相关字段插入，其他表中字段无效
-     * @return 影响的行数
+     * @return 若供应商id和标签id均存在，则允许插入，否则返回null
      */
     @Override
     public Integer addProduct(ProductDetail productDetail) {
-        return productMapper.addProduct(productDetail);
+        if(tagMapper.queryTagById(productDetail.getTid()) != null && supplierMapper.querySupplierById(productDetail.getSid()) != null) {
+            // 说明标签id和供应商id的外键约束均存在，故允许插入
+            return productMapper.addProduct(productDetail);
+        }
+        return null;
     }
 
     /**
@@ -56,7 +69,11 @@ public class ProductServiceImpl implements ProductService {
      */
     @Override
     public Integer updateProduct(ProductDetail productDetail) {
-        return productMapper.updateProduct(productDetail);
+        if(tagMapper.queryTagById(productDetail.getTid()) != null && supplierMapper.querySupplierById(productDetail.getSid()) != null) {
+            // 说明标签id和供应商id的外键约束均存在，故允许插入
+            return productMapper.updateProduct(productDetail);
+        }
+        return null;
     }
 
     /**
@@ -92,8 +109,23 @@ public class ProductServiceImpl implements ProductService {
         if(pageNum == null || pageSize == null) return null;
         PageHelper.startPage(pageNum, pageSize);
         List<ProductDetail> productDetails = productMapper.queryProductDetails();
-        PageInfo<ProductDetail> pageInfo = new PageInfo<>(productDetails);
-        return pageInfo;
+        return new PageInfo<>(productDetails);
+    }
+
+    /**
+     * 返回通过搜索对象查询到的产品详情信息
+     *
+     * @param productSearch 搜索对象，用于进行模糊查询
+     * @param pageNum 开始查询的页数
+     * @param pageSize 一页查询的条数
+     * @return 返回查询到的所有模糊匹配的信息
+     */
+    @Override
+    public PageInfo<ProductDetail> queryProductDetailsBySearch(ProductSearch productSearch, Integer pageNum, Integer pageSize){
+        if(pageNum == null || pageSize == null) return null;
+        PageHelper.startPage(pageNum, pageSize);
+        List<ProductDetail> productDetailList = productMapper.queryProductDetailBySearch(productSearch);
+        return new PageInfo<ProductDetail>(productDetailList);
     }
 }
 

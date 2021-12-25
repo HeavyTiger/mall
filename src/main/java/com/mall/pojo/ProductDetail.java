@@ -36,6 +36,17 @@ public class ProductDetail {
     public ProductDetail() {
     }
 
+    public ProductDetail(Integer pid, String pName, Double price, Integer stock, Integer tid, String pDescription, Integer pStatus, Integer sid) {
+        this.pid = pid;
+        this.pName = pName;
+        this.price = price;
+        this.stock = stock;
+        this.tid = tid;
+        this.pDescription = pDescription;
+        this.pStatus = pStatus;
+        this.sid = sid;
+    }
+
     public ProductDetail(Integer pid, String pName, Double price, Integer stock, Integer tid, String tName, String pDescription, Integer pStatus, Integer sid, String sName, String sPhone, String sEmail, String sDescription) {
         this.pid = pid;
         this.pName = pName;

@@ -53,7 +53,29 @@
 
     <select id="queryProductDetails" resultMap="ProductDetailMap">
         SELECT *
-        FROM mall.products
+        FROM mall.product_detail
+    </select>
+
+    <select id="queryProductDetailBySearch" parameterType="ProductSearch" resultMap="ProductDetailMap">
+        SELECT *
+        FROM mall.product_detail
+        <where>
+            <if test="productDescription != null">
+                AND (`product_name` LIKE "%"#{productDescription}"%" OR `product_description` LIKE "%"#{productDescription}"%")
+            </if>
+            <if test="supplierDescription != null">
+                AND (`supplier_username` LIKE "%"#{supplierDescription}"%" OR `supplier_description` LIKE "%"#{supplierDescription}"%")
+            </if>
+            <if test="tagDescription != null">
+                AND `tag_name` LIKE "%"#{tagDescription}"%"
+            </if>
+            <if test="minPrice != null">
+                AND `product_price` &gt;= #{minPrice}
+            </if>
+            <if test="maxPrice != null">
+                AND `product_price` &lt;= #{maxPrice}
+            </if>
+        </where>
     </select>
 
 </mapper>
