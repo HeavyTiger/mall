@@ -6,9 +6,13 @@ import com.mall.mapper.CustomerMapper;
 import com.mall.mapper.OrderCartMapper;
 import com.mall.mapper.ProductMapper;
 import com.mall.pojo.OrderCart;
+import com.mall.pojo.ProductDetail;
 import com.mall.service.OrderCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -51,13 +55,43 @@ public class OrderCartServiceImpl implements OrderCartService {
     }
 
     /**
-     * 根据购物车表id删除记录
-     * @param orderCartId 需要删除的购物车id
-     * @return 返回影响的行数
+     * 商品界面一键添加购物车服务接口
+     * @param productId 商品id
+     * @param customerId 客户id
+     * @return 返回影响的行数，如果参数异常，返回null
      */
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
+    public Integer addOrderCart(Integer productId, Integer customerId) {
+        if (customerMapper.queryCustomerById(customerId) != null &&
+                productMapper.queryProductDetailById(productId) != null) {
+            // 封装数据
+            ProductDetail productDetail = productMapper.queryProductDetailById(productId);
+            OrderCart orderCart = new OrderCart();
+            orderCart.setCustomerId(customerId);
+            orderCart.setProductId(productId);
+            orderCart.setProductAmount(1);
+            orderCart.setProductPrice(productDetail.getPrice());
+            orderCart.setStatus(1); // 默认加入购物车时标识为1，即下单时购买该商品
+
+            // 添加记录
+            return orderCartMapper.addOrderCart(orderCart);
+        }
+        return null;
+    }
+
+    /**
+     * 根据购物车表id删除记录
+     * @param orderCartId 需要删除的购物车id
+     * @return 返回影响的行数，如果要删除的行id不存在，返回null
+     */
+    @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public Integer deleteOrderCartById(Integer orderCartId) {
-        return orderCartMapper.deleteOrderCartById(orderCartId);
+        if (orderCartMapper.queryOrderCartByOrderCartId(orderCartId) != null) {
+            return orderCartMapper.deleteOrderCartById(orderCartId);
+        }
+        return null;
     }
 
     /**
@@ -66,6 +100,7 @@ public class OrderCartServiceImpl implements OrderCartService {
      * @return 返回影响的行数
      */
     @Override
+    @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public Integer updateOrderCart(OrderCart orderCart) {
         if (customerMapper.queryCustomerById(orderCart.getCustomerId()) != null &&
                 productMapper.queryProductDetailById(orderCart.getProductId()) != null) {

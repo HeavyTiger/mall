@@ -44,6 +44,12 @@
         FROM mall.order_carts
     </select>
 
+    <select id="queryOrderCartByOrderCartId" parameterType="int" resultMap="OrderCartMap">
+        SELECT *
+        FROM mall.order_carts
+        WHERE order_cart_id = #{orderCartId}
+    </select>
+
     <select id="queryOrderCartsByCustomerId" parameterType="int" resultMap="OrderCartMap">
         SELECT *
         FROM mall.order_carts

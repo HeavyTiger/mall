@@ -21,6 +21,14 @@ public interface OrderCartService {
     public Integer addOrderCart(OrderCart orderCart);
 
     /**
+     * 商品界面一键添加购物车服务接口
+     * @param productId 商品id
+     * @param customerId 客户id
+     * @return 返回影响的行数
+     */
+    public Integer addOrderCart(Integer productId, Integer customerId);
+
+    /**
      * 根据购物车表id删除记录
      * @param orderCartId 需要删除的购物车id
      * @return 返回影响的行数

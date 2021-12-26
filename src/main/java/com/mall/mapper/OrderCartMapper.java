@@ -41,6 +41,13 @@ public interface OrderCartMapper {
 
     /**
      * 根据用户id查询购物车status为1或0的记录（所有记录）
+     * @param orderCartId 要查询的购物车id
+     * @return 对应的购物车数据
+     */
+    public OrderCart queryOrderCartByOrderCartId(Integer orderCartId);
+
+    /**
+     * 根据用户id查询购物车status为1或0的记录（所有记录）
      * @param customerId 要查询的用户id
      * @return 该用户的购物车列表
      */
