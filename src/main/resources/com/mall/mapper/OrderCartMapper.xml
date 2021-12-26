@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.mapper.OrderCartMapper">
+
+    <resultMap id="OrderCartMap" type="OrderCart">
+        <result column="order_cart_id" property="orderCartId"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="product_id" property="productId"/>
+        <result column="product_amount" property="productAmount"/>
+        <result column="product_price" property="productPrice"/>
+        <result column="status" property="status"/>
+        <result column="order_id" property="orderId"/>
+        <result column="add_time" property="addTime"/>
+    </resultMap>
+
+    <insert id="addOrderCart" useGeneratedKeys="true" keyProperty="orderCartId" keyColumn="order_cart_id"
+            parameterType="OrderCart">
+        INSERT INTO mall.order_carts (order_cart_id, customer_id, product_id, product_amount,
+                                      product_price, status, order_id)
+        VALUES (#{orderCartId}, #{customerId}, #{productId}, #{productAmount}, #{productPrice}, #{status}, #{orderId})
+    </insert>
+
+    <delete id="deleteOrderCartById" parameterType="int">
+        DELETE
+        FROM mall.order_carts
+        WHERE order_cart_id = #{orderCartId}
+    </delete>
+
+    <update id="updateOrderCart" parameterType="OrderCart">
+        UPDATE mall.order_carts
+        <set>
+            <if test="customerId != null">customer_id=#{customerId},</if>
+            <if test="productId != null">product_id=#{productId},</if>
+            <if test="productAmount != null">product_amount=#{productAmount},</if>
+            <if test="productPrice != null">product_price=#{productPrice},</if>
+            <if test="status != null">status=#{status}</if>
+            <if test="orderId != null">order_id=#{orderId}</if>
+        </set>
+        WHERE order_cart_id = #{orderCartId}
+    </update>
+
+    <select id="queryOrderCarts" resultMap="OrderCartMap">
+        SELECT *
+        FROM mall.order_carts
+    </select>
+
+    <select id="queryOrderCartsByCustomerId" parameterType="int" resultMap="OrderCartMap">
+        SELECT *
+        FROM mall.order_carts
+        WHERE customer_id = #{customerId}
+    </select>
+
+    <select id="queryNewOrderCartsByCustomerId" parameterType="int" resultMap="OrderCartMap">
+        SELECT *
+        FROM mall.order_carts
+        WHERE customer_id = #{customerId} AND status = 1
+    </select>
+
+    <select id="queryOrderCartsByOrderId" parameterType="int" resultMap="OrderCartMap">
+        SELECT *
+        FROM mall.order_carts
+        WHERE order_id = #{orderId}
+    </select>
+</mapper>

@@ -30,13 +30,13 @@ public interface SupplierMapper {
     /**
      * 更新供应商的相关信息
      * @param supplier 数据变更后的supplier对象，必须提供supplierId
-     * @return 返回影响到的行数
+     * @return 返回影响的行数
      */
     public Integer updateSupplier(Supplier supplier);
 
     /**
      * 查询所有供应商信息，使用pageHelper可实现分页查询
-     * @return 返回查询到的供应商的所有信息
+     * @return 返回查询到的供应商的所有信息列表
      */
     public List<Supplier> querySuppliers();
 
