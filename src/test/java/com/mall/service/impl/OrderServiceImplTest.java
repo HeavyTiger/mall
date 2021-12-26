@@ -4,6 +4,7 @@ import com.mall.pojo.Order;
 import com.mall.pojo.OrderCart;
 import com.mall.service.OrderCartService;
 import com.mall.service.OrderService;
+import com.mall.util.JsonUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,11 +61,6 @@ public class OrderServiceImplTest {
 
     @Test
     public void queryOrdersByCustomerId() {
-        for (Order order : orderService.queryOrdersByCustomerId(3)) {
-            System.out.println(order);
-            for (OrderCart orderCart : orderCartService.queryOrderCartsByOrderId(order.getOrderId())) {
-                System.out.println(orderCart);
-            }
-        }
+        System.out.println(JsonUtil.objToJson(orderService.queryOrdersByCustomerId(3, 1, 10)));
     }
 }

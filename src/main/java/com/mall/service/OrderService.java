@@ -1,5 +1,6 @@
 package com.mall.service;
 
+import com.github.pagehelper.PageInfo;
 import com.mall.pojo.Order;
 
 import java.util.List;
@@ -34,7 +35,9 @@ public interface OrderService {
     /**
      * 根据用户的id获取其所有订单
      * @param customerId 需要查询的用户的id
+     * @param pageNum 查询页码
+     * @param pageSize 每页数量
      * @return 当前用户的所有订单记录
      */
-    public List<Order> queryOrdersByCustomerId(Integer customerId);
+    public PageInfo<Order> queryOrdersByCustomerId(Integer customerId, Integer pageNum, Integer pageSize);
 }
