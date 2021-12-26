@@ -33,7 +33,7 @@
             <if test="productId != null">product_id=#{productId},</if>
             <if test="productAmount != null">product_amount=#{productAmount},</if>
             <if test="productPrice != null">product_price=#{productPrice},</if>
-            <if test="status != null">status=#{status}</if>
+            <if test="status != null">status=#{status},</if>
             <if test="orderId != null">order_id=#{orderId}</if>
         </set>
         WHERE order_cart_id = #{orderCartId}

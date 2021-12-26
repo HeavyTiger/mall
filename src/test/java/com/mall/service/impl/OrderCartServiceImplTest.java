@@ -78,7 +78,7 @@ public class OrderCartServiceImplTest {
 
     @Test
     public void testQueryNewOrderCartsByCustomerId() {
-        for (OrderCart orderCart : orderCartService.queryNewOrderCartsByCustomerId(1)) {
+        for (OrderCart orderCart : orderCartService.queryNewOrderCartsByCustomerId(3)) {
             System.out.println(orderCart);
         }
     }

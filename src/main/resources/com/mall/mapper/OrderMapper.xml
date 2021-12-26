@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mall.mapper.OrderMapper">
+
+    <insert id="addOrder" useGeneratedKeys="true" keyProperty="orderId" keyColumn="order_id"
+            parameterType="Order">
+        INSERT INTO mall.orders (order_id, order_sn, customer_id, shipping_user, shipping_address, shipping_phone, order_money)
+        VALUES (#{orderId}, #{orderSn}, #{customerId}, #{shippingUser}, #{shippingAddress}, #{shippingPhone}, #{orderMoney})
+    </insert>
+
+    <delete id="deleteOrder" parameterType="int">
+        DELETE
+        FROM mall.orders
+        WHERE order_id = #{orderId}
+    </delete>
+
+    <update id="updateCustomer" parameterType="Customer">
+        UPDATE mall.orders
+        <set>
+            <if test="orderSn != null">order_sn=#{orderSn},</if>
+            <if test="customerId != null">customer_id=#{customerId},</if>
+            <if test="shippingUser != null">shipping_user=#{shippingUser},</if>
+            <if test="shippingAddress != null">shipping_address=#{shippingAddress},</if>
+            <if test="shippingPhone != null">shipping_phone=#{shippingPhone},</if>
+            <if test="orderMoney != null">order_money=#{orderMoney}</if>
+        </set>
+        WHERE order_id = #{orderId}
+    </update>
+
+    <resultMap id="OrderMap" type="Order">
+        <result column="order_id" property="orderId"/>
+        <result column="order_sn" property="orderSn"/>
+        <result column="customer_id" property="customerId"/>
+        <result column="shipping_user" property="shippingUser"/>
+        <result column="shipping_address" property="shippingAddress"/>
+        <result column="shipping_phone" property="shippingPhone"/>
+        <result column="order_money" property="orderMoney"/>
+        <result column="create_time" property="createTime"/>
+    </resultMap>
+
+    <select id="queryOrderByOrderId" parameterType="int" resultMap="OrderMap">
+        SELECT *
+        FROM mall.orders
+        WHERE order_id = #{orderId}
+    </select>
+
+    <select id="queryOrders" resultMap="OrderMap">
+        SELECT *
+        FROM mall.orders
+    </select>
+
+    <select id="queryOrdersByCustomerId" parameterType="int" resultMap="OrderMap">
+        SELECT *
+        FROM mall.orders
+        WHERE customer_id = #{customerId}
+    </select>
+</mapper>
