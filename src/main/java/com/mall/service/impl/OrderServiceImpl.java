@@ -1,5 +1,7 @@
 package com.mall.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.mall.mapper.OrderCartMapper;
 import com.mall.mapper.OrderMapper;
 import com.mall.mapper.ProductMapper;
@@ -109,10 +111,15 @@ public class OrderServiceImpl implements OrderService {
      * 根据用户的id获取其所有订单
      *
      * @param customerId 需要查询的用户的id
+     * @param pageNum 查询页码
+     * @param pageSize 每页数量
      * @return 当前用户的所有订单记录
      */
     @Override
-    public List<Order> queryOrdersByCustomerId(Integer customerId) {
-        return orderMapper.queryOrdersByCustomerId(customerId);
+    public PageInfo<Order> queryOrdersByCustomerId(Integer customerId, Integer pageNum, Integer pageSize) {
+        if (pageNum == null || pageSize == null) return null;
+        PageHelper.startPage(pageNum, pageSize);
+        List<Order> orders = orderMapper.queryOrdersByCustomerId(customerId);
+        return new PageInfo<>(orders);
     }
 }

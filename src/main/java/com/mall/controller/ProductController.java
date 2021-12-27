@@ -28,7 +28,8 @@ public class ProductController {
     public ResultBean<Object> getProductDetails(
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,
-            @RequestBody(required = false) ProductSearch productSearch){
+            @RequestBody(required = false) ProductSearch productSearch)
+    {
         // 默认从第一面开始，查询10条记录
         PageInfo<ProductDetail> pageInfo = productService.queryProductDetailsBySearch(productSearch, pageNum, pageSize);
         if(pageInfo == null) {
