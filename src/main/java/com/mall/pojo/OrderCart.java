@@ -24,10 +24,12 @@ public class OrderCart {
 
     private String addTime;         // 添加购物车时间
 
+    private String productName;     // 商品名称
+
     public OrderCart() {
     }
 
-    public OrderCart(Integer orderCartId, Integer customerId, Integer productId, Integer productAmount, Double productPrice, Integer status, Integer orderId, String addTime) {
+    public OrderCart(Integer orderCartId, Integer customerId, Integer productId, Integer productAmount, Double productPrice, Integer status, Integer orderId, String addTime, String productName) {
         this.orderCartId = orderCartId;
         this.customerId = customerId;
         this.productId = productId;
@@ -36,6 +38,26 @@ public class OrderCart {
         this.status = status;
         this.orderId = orderId;
         this.addTime = addTime;
+        this.productName = productName;
+    }
+
+    /*public OrderCart(Integer orderCartId, Integer customerId, Integer productId, Integer productAmount, Double productPrice, Integer status, Integer orderId, String addTime) {
+        this.orderCartId = orderCartId;
+        this.customerId = customerId;
+        this.productId = productId;
+        this.productAmount = productAmount;
+        this.productPrice = productPrice;
+        this.status = status;
+        this.orderId = orderId;
+        this.addTime = addTime;
+    }*/
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
     }
 
     public Integer getOrderCartId() {
@@ -104,7 +126,7 @@ public class OrderCart {
 
     @Override
     public String toString() {
-        return "OrderCarts{" +
+        return "OrderCart{" +
                 "orderCartId=" + orderCartId +
                 ", customerId=" + customerId +
                 ", productId=" + productId +
@@ -113,6 +135,7 @@ public class OrderCart {
                 ", status=" + status +
                 ", orderId=" + orderId +
                 ", addTime='" + addTime + '\'' +
+                ", productName='" + productName + '\'' +
                 '}';
     }
 }

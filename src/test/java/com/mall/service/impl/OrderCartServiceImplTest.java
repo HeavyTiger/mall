@@ -45,7 +45,7 @@ public class OrderCartServiceImplTest {
         orderCartService.addOrderCart(orderCart);*/
 
         // OrderCart orderCart1 = new OrderCart(null, 1, 1, 1, 10000.00, 1, 1, null);
-        OrderCart orderCart2 = new OrderCart(null, 1, 1, 1, 10000.00, 1, 1, null);
+        OrderCart orderCart2 = new OrderCart(null, 1, 1, 1, 10000.00, 1, 1, null, "商品名称1");
         //orderCartService.addOrderCart(orderCart1);
         orderCartService.addOrderCart(orderCart2);
     }
@@ -66,7 +66,10 @@ public class OrderCartServiceImplTest {
 
     @Test
     public void testQueryOrderCarts() {
-        System.out.println(orderCartService.queryOrderCarts());
+        for (OrderCart orderCart : orderCartService.queryOrderCarts()) {
+            System.out.println(orderCart);
+        }
+
     }
 
     @Test
@@ -78,13 +81,16 @@ public class OrderCartServiceImplTest {
 
     @Test
     public void testQueryNewOrderCartsByCustomerId() {
-        for (OrderCart orderCart : orderCartService.queryNewOrderCartsByCustomerId(3)) {
+        for (OrderCart orderCart : orderCartService.queryNewOrderCartsByCustomerId(1)) {
             System.out.println(orderCart);
         }
     }
 
     @Test
     public void testQueryOrderCartsByOrderId() {
-        System.out.println(orderCartService.queryOrderCartsByOrderId(1));
+        for (OrderCart orderCart : orderCartService.queryOrderCartsByOrderId(1)) {
+            System.out.println(orderCart);
+        }
+
     }
 }

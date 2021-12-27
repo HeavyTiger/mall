@@ -3,7 +3,7 @@
 <mapper namespace="com.mall.mapper.OrderCartMapper">
 
     <resultMap id="OrderCartMap" type="OrderCart">
-        <result column="order_cart_id" property="orderCartId"/>
+        <id column="order_cart_id" property="orderCartId"/>
         <result column="customer_id" property="customerId"/>
         <result column="product_id" property="productId"/>
         <result column="product_amount" property="productAmount"/>
@@ -11,6 +11,7 @@
         <result column="status" property="status"/>
         <result column="order_id" property="orderId"/>
         <result column="add_time" property="addTime"/>
+        <result column="product_name" property="productName"/>
     </resultMap>
 
     <insert id="addOrderCart" useGeneratedKeys="true" keyProperty="orderCartId" keyColumn="order_cart_id"
@@ -40,31 +41,32 @@
     </update>
 
     <select id="queryOrderCarts" resultMap="OrderCartMap">
-        SELECT *
-        FROM mall.order_carts
+        SELECT order_cart_id, customer_id, order_carts.product_id, product_amount, order_carts.product_price, status, order_id, add_time, product_name
+        FROM mall.order_carts, mall.products
+        WHERE order_carts.product_id = products.product_id;
     </select>
 
     <select id="queryOrderCartByOrderCartId" parameterType="int" resultMap="OrderCartMap">
-        SELECT *
-        FROM mall.order_carts
-        WHERE order_cart_id = #{orderCartId}
+        SELECT order_cart_id, customer_id, order_carts.product_id, product_amount, order_carts.product_price, status, order_id, add_time, product_name
+        FROM mall.order_carts, mall.products
+        WHERE order_carts.product_id = products.product_id AND order_cart_id = #{orderCartId}
     </select>
 
     <select id="queryOrderCartsByCustomerId" parameterType="int" resultMap="OrderCartMap">
-        SELECT *
-        FROM mall.order_carts
-        WHERE customer_id = #{customerId}
+        SELECT order_cart_id, customer_id, order_carts.product_id, product_amount, order_carts.product_price, status, order_id, add_time, product_name
+        FROM mall.order_carts, mall.products
+        WHERE order_carts.product_id = products.product_id AND customer_id = #{customerId}
     </select>
 
     <select id="queryNewOrderCartsByCustomerId" parameterType="int" resultMap="OrderCartMap">
-        SELECT *
-        FROM mall.order_carts
-        WHERE customer_id = #{customerId} AND status = 1
+        SELECT order_cart_id, customer_id, order_carts.product_id, product_amount, order_carts.product_price, status, order_id, add_time, product_name
+        FROM mall.order_carts, mall.products
+        WHERE order_carts.product_id = products.product_id AND customer_id = #{customerId} AND status = 1
     </select>
 
     <select id="queryOrderCartsByOrderId" parameterType="int" resultMap="OrderCartMap">
-        SELECT *
-        FROM mall.order_carts
-        WHERE order_id = #{orderId}
+        SELECT order_cart_id, customer_id, order_carts.product_id, product_amount, order_carts.product_price, status, order_id, add_time, product_name
+        FROM mall.order_carts, mall.products
+        WHERE order_carts.product_id = products.product_id AND order_id = #{orderId}
     </select>
 </mapper>
