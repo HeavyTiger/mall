@@ -53,6 +53,10 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderSn(UUID.randomUUID().toString().replace("-", ""));
         // 查询当前用户购物车内的所有未购买商品
         List<OrderCart> orderCartList = orderCartMapper.queryNewOrderCartsByCustomerId(order.getCustomerId());
+        if(orderCartList == null || orderCartList.isEmpty()) {
+            // 抛出异常，@Transactional捕获异常后自动回滚，Controller层需要捕获异常
+            throw new RuntimeException("购物车中没有商品！");
+        }
         // 计算总金额
         double orderTotalMoney = 0;
         for(OrderCart item : orderCartList){
