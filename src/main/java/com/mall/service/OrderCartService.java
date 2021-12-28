@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * @author AnthonyCJ
  * @version 1.0
- * @description TODO
+ * @description OrderCartService业务层接口，提供添加购物车、更新购物车、查询购物车等服务
  * @date 2021/12/25 17:05
  */
 public interface OrderCartService {
@@ -37,10 +37,11 @@ public interface OrderCartService {
 
     /**
      * 更新购物车的相关信息
-     * @param orderCart 数据变更后的OrderCart对象，必须提供orderCartId
-     * @return 返回影响的行数
+     * @param orderCartId 购物车id
+     * @param productAmount 更改的商品数量
+     * @return 影响的行数
      */
-    public Integer updateOrderCart(OrderCart orderCart);
+    public Integer updateOrderCart(int orderCartId, int productAmount);
 
     /**
      * 查询所有购物车信息，使用pageHelper可实现分页查询

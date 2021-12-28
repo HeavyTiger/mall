@@ -24,7 +24,7 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping(value = "/product")
+    @PostMapping(value = "/product")
     public ResultBean<Object> getProductDetails(
             @RequestParam(value = "pageNum", required = false, defaultValue = "1") Integer pageNum,
             @RequestParam(value = "pageSize", required = false, defaultValue = "10") Integer pageSize,

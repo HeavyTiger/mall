@@ -45,9 +45,10 @@ public class OrderCartServiceImplTest {
         orderCartService.addOrderCart(orderCart);*/
 
         // OrderCart orderCart1 = new OrderCart(null, 1, 1, 1, 10000.00, 1, 1, null);
-        OrderCart orderCart2 = new OrderCart(null, 1, 1, 1, 10000.00, 1, 1, null, "商品名称1");
+        //OrderCart orderCart2 = new OrderCart(null, 1, 1, 1, 10000.00, 1, 1, null, "商品名称1");
         //orderCartService.addOrderCart(orderCart1);
-        orderCartService.addOrderCart(orderCart2);
+        System.out.println(orderCartService.addOrderCart(4, 1));
+        //orderCartService.addOrderCart(orderCart2);
     }
 
     @Test
@@ -58,10 +59,10 @@ public class OrderCartServiceImplTest {
 
     @Test
     public void testUpdateOrderCart() {
-        OrderCart orderCart = new OrderCart();
-        orderCart.setStatus(0);
-        orderCart.setOrderCartId(3);
-        System.out.println(orderCartService.updateOrderCart(orderCart));
+        //OrderCart orderCart = new OrderCart();
+        //orderCart.setStatus(0);
+        //orderCart.setOrderCartId(3);
+        System.out.println(orderCartService.updateOrderCart(6,10));
     }
 
     @Test

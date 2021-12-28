@@ -46,6 +46,34 @@
         WHERE order_carts.product_id = products.product_id;
     </select>
 
+    <select id="queryOrderCartId" parameterType="OrderCart" resultType="Integer">
+        SELECT order_cart_id
+        FROM mall.order_carts
+        <where>
+            <if test="orderCartId!=null">
+                and order_cart_id=#{orderCartId}
+            </if>
+            <if test="customerId!=null">
+                and customer_id=#{customerId}
+            </if>
+            <if test="productId!=null">
+                and product_id=#{productId}
+            </if>
+            <if test="productAmount!=null">
+                and product_amount=#{productAmount}
+            </if>
+            <if test="productPrice!=null">
+                and product_price=#{productPrice}
+            </if>
+            <if test="status!=null">
+                and status=#{status}
+            </if>
+            <if test="orderId!=null">
+                and order_id=#{orderId}
+            </if>
+        </where>
+    </select>
+
     <select id="queryOrderCartByOrderCartId" parameterType="int" resultMap="OrderCartMap">
         SELECT order_cart_id, customer_id, order_carts.product_id, product_amount, order_carts.product_price, status, order_id, add_time, product_name
         FROM mall.order_carts, mall.products

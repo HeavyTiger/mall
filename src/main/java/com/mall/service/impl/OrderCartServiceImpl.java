@@ -58,15 +58,28 @@ public class OrderCartServiceImpl implements OrderCartService {
      * 商品界面一键添加购物车服务接口
      * @param productId 商品id
      * @param customerId 客户id
-     * @return 返回影响的行数，如果参数异常，返回null
+     * @return 返回影响的行数
      */
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public Integer addOrderCart(Integer productId, Integer customerId) {
-        if (customerMapper.queryCustomerById(customerId) != null &&
-                productMapper.queryProductDetailById(productId) != null) {
+        // 1.判断购物车是否已存在待购买的目标商品，productId、customerId、且status=1
+        OrderCart tempOrderCart = new OrderCart();
+        tempOrderCart.setProductId(productId);
+        tempOrderCart.setCustomerId(customerId);
+        tempOrderCart.setStatus(1);
+        List<Integer> orderCartIds = orderCartMapper.queryOrderCartId(tempOrderCart);
+
+        if (orderCartIds != null && orderCartIds.size() != 0) {
+            // 如果已存在，则productAmount字段加1
+            OrderCart orderCart = orderCartMapper.queryOrderCartByOrderCartId(orderCartIds.get(0));
+            orderCart.setProductAmount(orderCart.getProductAmount() + 1);
+            return orderCartMapper.updateOrderCart(orderCart);
+        } else {
+            // 如果不存在，则添加一行数据
             // 封装数据
             ProductDetail productDetail = productMapper.queryProductDetailById(productId);
+
             OrderCart orderCart = new OrderCart();
             orderCart.setCustomerId(customerId);
             orderCart.setProductId(productId);
@@ -77,7 +90,6 @@ public class OrderCartServiceImpl implements OrderCartService {
             // 添加记录
             return orderCartMapper.addOrderCart(orderCart);
         }
-        return null;
     }
 
     /**
@@ -94,21 +106,22 @@ public class OrderCartServiceImpl implements OrderCartService {
         return null;
     }
 
+
     /**
      * 更新购物车的相关信息
-     * @param orderCart 数据变更后的OrderCart对象，必须提供orderCartId
-     * @return 返回影响的行数
+     * @param orderCartId 购物车id
+     * @param productAmount 更改的商品数量
+     * @return 影响的行数
      */
     @Override
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
-    public Integer updateOrderCart(OrderCart orderCart) {
-        if (customerMapper.queryCustomerById(orderCart.getCustomerId()) != null &&
-                productMapper.queryProductDetailById(orderCart.getProductId()) != null) {
-            // 默认加入购物车时标识为1，即下单时购买该商品
-            orderCart.setStatus(1);
-            return orderCartMapper.updateOrderCart(orderCart);
-        }
-        return null;
+    public Integer updateOrderCart(int orderCartId, int productAmount) {
+        OrderCart orderCart = new OrderCart();
+        orderCart.setOrderCartId(orderCartId);
+        orderCart.setProductAmount(productAmount);
+        // 默认加入购物车时标识为1，即下单时购买该商品
+        orderCart.setStatus(1);
+        return orderCartMapper.updateOrderCart(orderCart);
     }
 
     /**

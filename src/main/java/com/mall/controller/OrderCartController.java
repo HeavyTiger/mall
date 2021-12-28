@@ -42,14 +42,10 @@ public class OrderCartController {
         Integer userId = JwtUtil.getUserId(token);
 
         // 添加数据
-        Integer addFlag = orderCartService.addOrderCart(productId, userId);
+        orderCartService.addOrderCart(productId, userId);
 
         // 返回结果
-        if (addFlag == null || addFlag == 0) {
-            return new ResultBean<>(EnumResult.FAIL);
-        } else {
-            return new ResultBean<>(EnumResult.SUCCESS);
-        }
+        return new ResultBean<>(EnumResult.SUCCESS);
     }
 
     /**
@@ -76,8 +72,10 @@ public class OrderCartController {
      */
     @PutMapping(value = "/orderCart")
     public ResultBean<Object> updateOrderCart(@RequestBody OrderCart orderCart) {
-        // 更新数据
-        orderCartService.updateOrderCart(orderCart);
+        // 获取数据
+        Integer orderCartId = orderCart.getOrderCartId();
+        Integer productAmount = orderCart.getProductAmount();
+        orderCartService.updateOrderCart(orderCartId, productAmount);
         // 返回结果
         return new ResultBean<>(EnumResult.SUCCESS);
     }

@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * @author AnthonyCJ
  * @version 1.0
- * @description TODO
+ * @description OrderCart购物车的mapper接口，处理购物车相关的查询、添加、修改需求
  * @date 2021/12/25 15:31
  */
 public interface OrderCartMapper {
@@ -38,6 +38,13 @@ public interface OrderCartMapper {
      * @return 返回查询到的供应商的所有信息列表
      */
     public List<OrderCart> queryOrderCarts();
+
+    /**
+     * 查询购物车中是否已存在该数据
+     * @param orderCart 封装查询的条件
+     * @return 查询到的
+     */
+    public List<Integer> queryOrderCartId(OrderCart orderCart);
 
     /**
      * 根据用户id查询购物车status为1或0的记录（所有记录）
