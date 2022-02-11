@@ -1,6 +1,6 @@
 <h1 align="center">商城系统</h1>
 
-使用ssm+vue框架实现的商城用户端系统
+使用ssm+vue框架实现的商城用户端系统，相关介绍详情请见如下博客文章：[SSM整合开发 | HeavyTiger's Blogs](https://heavytiger.github.io/articles/SSM整合开发/#more)
 
 ## 商城系统的表结构
 
